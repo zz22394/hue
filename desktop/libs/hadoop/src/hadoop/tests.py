@@ -35,7 +35,7 @@ from hadoop import confparse
 from hadoop import pseudo_hdfs4
 
 if sys.version_info[0] > 2:
-  from io import StringIO as string_io
+  from io import BytesIO as string_io
 else:
   from cStringIO import StringIO as string_io
 
@@ -63,6 +63,8 @@ def test_confparse():
   """
 
   cp_data = confparse.ConfParse(data)
+  if not isinstance(data, bytes):
+    data = data.encode()
   cp_file = confparse.ConfParse(string_io(data))
 
   for cp in (cp_data, cp_file):
